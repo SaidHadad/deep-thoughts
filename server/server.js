@@ -11,7 +11,7 @@ const server = new ApolloServer({
   resolvers
 });
 
-server.applyMiddleware({ app });
+startServer();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -22,3 +22,8 @@ db.once('open', () => {
     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
   });
 });
+
+async function startServer() {
+  await server.start();
+  server.applyMiddleware({ app });
+}
